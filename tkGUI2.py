@@ -4,6 +4,7 @@ from tkinter.messagebox import showerror
 from tkinter import ttk
 from batt_data_parse7 import get_data
 
+
 filelist = []
 
 class MyFrame(Frame):  
