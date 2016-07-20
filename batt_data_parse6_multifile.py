@@ -2,13 +2,14 @@
 import xlrd
 
 
+
 ###############
 # Part 0: User Setup
 # Change file and search values
 ###############
 
 # Files must be in same working directory, check sheet name
-filelist = ['B013-2_7-19-2016_4A_Switch.xls', 'B014-2_7-19-2016_4A_Switch.xls']
+filelist = ['B014-2_7-19-2016_4A_Switch.xls']
 # Enter numbers here to change search values, leave zero at the end
 v_target = [4.1, 4.0, 3.9, 3.8, 3.7, 0]
 CUTOFF = 2.5
