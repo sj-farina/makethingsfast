@@ -130,5 +130,5 @@ def get_data(filelist):
 			i += 1
 		print_row += 1 
 
-	wb.save('ex.xls')
+	wb.save('output.xls')
 # get_data(filelist)

@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter.filedialog import *
 from tkinter.messagebox import showerror
 from tkinter import ttk
-from batt_data_parse7 import get_data
+from batt_data_parse8 import get_data
 
 
 filelist = []
