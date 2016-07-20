@@ -20,13 +20,32 @@ class MyFrame(Frame):
         self.button.grid(row = 1, column = 1, sticky = W)
 
         self.button = Button(self, text = "Calculate", command = self.do_thingz, width = 10)
-        self.button.grid(row = 2, column = 2, sticky = W)
+        self.button.grid(row = 2, column = 2, sticky = E)
+        
+
+        # var = IntVar()
+        # self.radio = Radiobutton(self, text="Option 1", variable = var, value=1, command=self.sel)
+        # self.radio.grid(row = 1, column = 5, sticky = W )
+        # self.radio = Radiobutton(self, text="Option 2", variable = var, value=2, command=self.sel)
+        # self.radio.grid(row = 2, column = 5, sticky = W )
+
+    def sel(self):
+        print (str(var.get()))
+       #selection = "You selected the option " + str(var.get())
+       #label.config(text = selection)
     
     def do_thingz(self):
         get_data(filelist)
         print("beep")
 
+    def clear_files(self):
+        filelist = []
+        #self.label = Label(self, text="No Files Selected").grid(column=2, row=1, sticky=W)
+
+
     def load_file(self):
+        #clear files incase filelist is already full
+        self.clear_files()
         file_names_raw = askopenfiles(mode = 'r', filetypes = (("Excel files", "*.xls"), ("All files", "*.*") ))
         for i in range(len(file_names_raw)):
             filelist.append(file_names_raw[i].name)

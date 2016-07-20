@@ -34,15 +34,11 @@ TEMP_COL = 21
 # Include negative sign here for discharging
 DISCHARGE_CUR = -4
 
-
-
-
-
-
 for num in range(len(filelist)):
 	filename = filelist[num]
 
-	# magic number 2 is from ardent output, should be modded to parse sheet names
+	# magic number 1 is from ardent output, should be modded to parse sheet names
+	# this only works with .xls files, not .xlsx, need to fix
 	data_in = xlrd.open_workbook(filename).sheet_by_index(1)
 
 
@@ -72,8 +68,6 @@ for num in range(len(filelist)):
 		i +=1
 
 	print('________________________')
-
-
 
 
 	# ###############
