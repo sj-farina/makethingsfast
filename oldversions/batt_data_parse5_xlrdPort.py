@@ -28,10 +28,13 @@ import xlrd
 ###############
 
 # File must be in same working directory, check sheet name
-filename = 'B013-2_7-19-2016_4A_Switch.xls'
+filename = 'C:/Users/sfarina/Documents/Bat Testing/Supplier A - Test Data/Discharge 4000mA_5sec_rest_30sec_-20_0C_25C_55C/LIR18350_DCHG_4000mA_-20C_0C_25C_55C_6-14-2016_2.xls'
 # Enter numbers here to change search values, leave zero at the end
-v_target = [4.1, 4.0, 3.9, 3.8, 3.7, 0]
-CUTOFF = 2.5
+# v_target = [4.1, 4.0, 3.9, 3.8, 3.7, 0]
+# CUTOFF = 2.5
+
+v_target = [8.2, 8.0, 7.8, 7.6, 7.5, 0]
+CUTOFF = 5
 
 
 
