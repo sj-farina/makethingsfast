@@ -64,24 +64,6 @@ def get_data(filelist, single_cell):
 			except:
 				break
 
-			# Check for new tests
-			if (data_in.cell_value(rowx = i, colx = VOL_COL) < CUTOFF and data_in.cell_value(rowx = i, colx = CAP_MAH_COL) != 0 
-			and data_in.cell_value(rowx = i, colx = CUR_COL) <= DISCHARGE_CUR + 1):
-				# Magic number 7 fits the layout currently being used to display data
-				print_col += 7
-
-				# Capacity in mAh instead of Ah thus *100
-				out_file.write(print_row, print_col, data_in.cell_value(rowx = i, colx = CAP_MAH_COL) * 1000)
-				print_col += 1			
-				out_file.write(print_row, print_col, data_in.cell_value(rowx = i, colx = CAP_PWR_COL))
-				print_col += 1
-
-				# Reset trackers and counters, move down a row
-				new_dataset = True
-				j = 0
-				print_col = 0
-				print_row += 1
-
 			# Look at current, every falling edge, record position, check values
 			if last_cell.value == 0 and cur_cell.value < DISCHARGE_CUR + 1:
 				last_jump = cur_jump
@@ -110,5 +92,23 @@ def get_data(filelist, single_cell):
 					print_col += 1
 
 					j += 1
+
+			# Check for new tests
+			if (data_in.cell_value(rowx = i, colx = VOL_COL) < CUTOFF and data_in.cell_value(rowx = i, colx = CAP_MAH_COL) != 0 
+			and data_in.cell_value(rowx = i, colx = CUR_COL) <= DISCHARGE_CUR + 1):
+				# Magic number 29 fits the layout currently being used to display data
+				print_col = 29
+
+				# Capacity in mAh instead of Ah thus *100
+				out_file.write(print_row, print_col, data_in.cell_value(rowx = i, colx = CAP_MAH_COL) * 1000)
+				print_col += 1			
+				out_file.write(print_row, print_col, data_in.cell_value(rowx = i, colx = CAP_PWR_COL))
+				print_col += 1
+
+				# Reset trackers and counters, move down a row
+				new_dataset = True
+				j = 0
+				print_col = 0
+				print_row += 1
 			i += 1
 	wb.save('output.xls')
