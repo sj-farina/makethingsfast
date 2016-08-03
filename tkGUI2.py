@@ -49,7 +49,7 @@ class MyFrame(Frame):
             fileout = self.e.get()
         else:
             fileout = "output.xls"
-
+        # Make sure the file name is  at least reasonably valid, doesn't guarantee .xls 
         bads = re.compile('[^a-zA-Z0-9_.-]')
         if bads.search(fileout):
              self.l2.config(text="ERROR: Invalid characters", fg = "red")

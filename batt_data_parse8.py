@@ -14,11 +14,11 @@ def get_data(filelist, single_cell, fileout):
 	# Include negative sign here for discharging
 	DISCHARGE_CUR = -4
 
-	#create new workbook to store output in
+	# Create new workbook to store output in
 	wb = Workbook()
 	out_file = wb.add_sheet('Sheet1')
 
-	# initilize row and col within the new excel file
+	# Initialize row and col within the new excel file
 	print_row = 0 
 	print_col = 0
 
@@ -44,7 +44,7 @@ def get_data(filelist, single_cell, fileout):
 		out_file.write(print_row, print_col, filename)
 		print_col += 1
 
-		# Magic number 1 is from arbin output, should be modded to parse sheet names
+		# Magic number 1 is from arbin output, should be modified to parse sheet names
 		# This only works with .xls files, not .xlsx, need to fix!!!!!!!!!!!
 		data_in = xlrd.open_workbook(filename).sheet_by_index(1)
 
