@@ -2,10 +2,9 @@
 import xlrd
 from xlwt import Workbook
 
-def get_data(filelist, single_cell):
-	print("processing...")
 
-	# DEFINES
+def get_data(filelist, single_cell, fileout):
+	# DEFINES, these come from the standard Arbin output
 	INDEX_COL = 0
 	CUR_COL = 6
 	VOL_COL = 7
@@ -111,4 +110,4 @@ def get_data(filelist, single_cell):
 				print_col = 0
 				print_row += 1
 			i += 1
-	wb.save('output.xls')
+	wb.save(fileout)
