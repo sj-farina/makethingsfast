@@ -97,17 +97,17 @@ class MyFrame(Frame):
             if filelist != []:
                 self.l2.config(text="Processing...", fg = "black")
                 self.update_idletasks()
-                # try:
-                batt_data_parse8.get_data(filelist, self.v1.get(), fileout, self.v2.get(), self.v3.get(), int(self.e2.get()), int(self.e3.get()) )
-                self.l2.config(text="Finished!", fg = "black")
-                print(self.v1.get())
-                print(self.v2.get())
-                print(self.v3.get())
-                print(self.e2.get())
-                print(self.e3.get())
-                print("--------")
-                # except:
-                #     self.l2.config(text="ERROR: Can't write to file Is it in use elsewhere?", fg = "red")
+                try:
+                    batt_data_parse8.get_data(filelist, self.v1.get(), fileout, self.v2.get(), self.v3.get(), int(self.e2.get()), int(self.e3.get()) )
+                    self.l2.config(text="Finished!", fg = "black")
+                    print(self.v1.get())
+                    print(self.v2.get())
+                    print(self.v3.get())
+                    print(self.e2.get())
+                    print(self.e3.get())
+                    print("--------")
+                except:
+                    self.l2.config(text="ERROR: Could not print to file", fg = "red")
 
             else:
                 self.l2.config(text="ERROR: No files selected", fg = "red")

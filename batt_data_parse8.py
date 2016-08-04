@@ -43,8 +43,8 @@ def get_data(filelist, single_cell, fileout, shownames, showtemp, cellspace1, ce
 
 		# Every new file, start at left and print file name
 		print_col = 0
+		filename = filelist[num]
 		if shownames:
-			filename = filelist[num]
 			out_file.write(print_row, print_col, filename)
 			print_col += 1
 
@@ -75,7 +75,7 @@ def get_data(filelist, single_cell, fileout, shownames, showtemp, cellspace1, ce
 
 					if showtemp:
 						out_file.write(print_row, 1, 'temp = ' + str(round(data_in.cell_value(rowx = cur_jump - 1, colx = TEMP_COL))))
-						print_col = 3
+					print_col = 3
 
 					out_file.write(print_row, print_col, data_in.cell_value(rowx = cur_jump - 1, colx = VOL_COL))
 					print_col += 1
