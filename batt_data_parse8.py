@@ -3,7 +3,7 @@ import xlrd
 from xlwt import Workbook
 
 
-def get_data(filelist, single_cell, fileout):
+def get_data(filelist, single_cell, fileout, shownames, showtemp, cellspace1, cellspace2):
 	# DEFINES, these come from the standard Arbin output
 	INDEX_COL = 0
 	CUR_COL = 6
@@ -29,6 +29,9 @@ def get_data(filelist, single_cell, fileout):
 	else:
 		v_target = [8.2, 8.0, 7.8, 7.6, 7.5, 0]
 		CUTOFF = 5
+
+	capacity_out_col = (len(v_target) + 1)*2 + len(v_target)*cellspace1 + cellspace2
+	print (capacity_out_col)
 	# # Automatically subtracts .001 for rounding purposes 
 	for num in range(len(v_target)):
 		v_target[num] = v_target[num] - 0.001
@@ -40,9 +43,10 @@ def get_data(filelist, single_cell, fileout):
 
 		# Every new file, start at left and print file name
 		print_col = 0
-		filename = filelist[num]
-		out_file.write(print_row, print_col, filename)
-		print_col += 1
+		if shownames:
+			filename = filelist[num]
+			out_file.write(print_row, print_col, filename)
+			print_col += 1
 
 		# Magic number 1 is from arbin output, should be modified to parse sheet names
 		# This only works with .xls files, not .xlsx, need to fix!!!!!!!!!!!
@@ -69,14 +73,15 @@ def get_data(filelist, single_cell, fileout):
 				cur_jump = i
 				if new_dataset == True:
 
-					out_file.write(print_row, 1, 'temp = ' + str(round(data_in.cell_value(rowx = cur_jump - 1, colx = TEMP_COL))))
-					print_col = 3
+					if showtemp:
+						out_file.write(print_row, 1, 'temp = ' + str(round(data_in.cell_value(rowx = cur_jump - 1, colx = TEMP_COL))))
+						print_col = 3
 
 					out_file.write(print_row, print_col, data_in.cell_value(rowx = cur_jump - 1, colx = VOL_COL))
 					print_col += 1
 
 					out_file.write(print_row, print_col, data_in.cell_value(rowx = cur_jump, colx = VOL_COL))
-					print_col += 1
+					print_col += cellspace1
 
 					new_dataset = False
 
@@ -88,7 +93,7 @@ def get_data(filelist, single_cell, fileout):
 					print_col += 1
 
 					out_file.write(print_row, print_col, data_in.cell_value(rowx = last_jump, colx = VOL_COL))
-					print_col += 1
+					print_col += cellspace1
 
 					j += 1
 
@@ -96,7 +101,7 @@ def get_data(filelist, single_cell, fileout):
 			if (data_in.cell_value(rowx = i, colx = VOL_COL) < CUTOFF and data_in.cell_value(rowx = i, colx = CAP_MAH_COL) != 0 
 			and data_in.cell_value(rowx = i, colx = CUR_COL) <= DISCHARGE_CUR + 1):
 				# Magic number 29 fits the layout currently being used to display data
-				print_col = 29
+				print_col = capacity_out_col
 
 				# Capacity in mAh instead of Ah thus *100
 				out_file.write(print_row, print_col, data_in.cell_value(rowx = i, colx = CAP_MAH_COL) * 1000)
