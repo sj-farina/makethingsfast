@@ -1,7 +1,7 @@
-ArbinExcelScraper
+ArbinExcelDataScraper
 
 Created and maintained by Janey Farina
-Last Updated by 8-2-2016
+Last Updated by 8-4-2016
 
 For source code, updates, questions or bugs visit 
 https://github.com/sj-farina/makethingsfast
@@ -20,6 +20,8 @@ Select name for output file default = output.xls
 Adjust output formating as desired
 
 Click "process"
+
+Output file will appear in same folder as this program
 
 ############################################
 

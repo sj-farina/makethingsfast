@@ -3,9 +3,18 @@ from tkinter.filedialog import *
 from tkinter.messagebox import showerror
 from tkinter import ttk
 import batt_data_parse8 
+import webbrowser
 
 
 filelist = []
+
+ABOUT_TEXT = """Arbin Excel Data Scraper
+
+Created and maintained by Janey Farina
+Last Updated 8-4-2016
+
+For source code, bug reporting, feature requests, 
+or additional information please visit """
 
 class MyFrame(Frame):  
     def __init__(self):
@@ -15,6 +24,12 @@ class MyFrame(Frame):
         self.master.rowconfigure(5, weight = 1)
         self.master.columnconfigure(5, weight = 1)
         self.grid(sticky = W+E+N+S)
+
+        # Menu bar
+        self.master.title("Simple menu")
+        menubar = Menu(self.master)
+        self.master.config(menu=menubar)
+        menubar.add_cascade(label="Info", command=self.popup) 
 
         # Dynamic Labels
         # # of files selected
@@ -100,12 +115,6 @@ class MyFrame(Frame):
                 try:
                     batt_data_parse8.get_data(filelist, self.v1.get(), fileout, self.v2.get(), self.v3.get(), int(self.e2.get()), int(self.e3.get()) )
                     self.l2.config(text="Finished!", fg = "black")
-                    print(self.v1.get())
-                    print(self.v2.get())
-                    print(self.v3.get())
-                    print(self.e2.get())
-                    print(self.e3.get())
-                    print("--------")
                 except:
                     self.l2.config(text="ERROR: Could not print to file", fg = "red")
 
@@ -127,8 +136,17 @@ class MyFrame(Frame):
             filelist.append(file_names_raw[i].name)
         if len(file_names_raw) != 0:
             self.l1.config(text="%i Files Selected" % len(filelist))
+ 
+    def callback(self, event):
+        webbrowser.open_new(r"https://github.com/sj-farina/makethingsfast")
 
-
+    def popup(self):
+        toplevel = Toplevel()
+        label1 = Label(toplevel, text=ABOUT_TEXT, height=0, width=50)
+        label1.pack()
+        link = Label(toplevel, text="https://github.com/sj-farina/makethingsfast", fg="blue", cursor="hand2")
+        link.pack()
+        link.bind("<Button-1>", self.callback)
 
 if __name__ == "__main__":
     MyFrame().mainloop()
