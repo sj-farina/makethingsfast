@@ -3,7 +3,7 @@ import xlrd
 from xlwt import Workbook
 
 
-def get_data(filelist, single_cell, fileout, shownames, showtemp, cellspace1, cellspace2):
+def get_data(filelist, single_cell, fileout, shownames, showtemp, cellspace1, cellspace2, discharge_cur_raw):
 	# DEFINES, these come from the standard Arbin output
 	INDEX_COL = 0
 	CUR_COL = 6
@@ -11,8 +11,6 @@ def get_data(filelist, single_cell, fileout, shownames, showtemp, cellspace1, ce
 	CAP_MAH_COL = 9
 	CAP_PWR_COL = 11
 	TEMP_COL = 21
-	# Include negative sign here for discharging
-	DISCHARGE_CUR = -4
 
 	# Create new workbook to store output in
 	wb = Workbook()
@@ -22,8 +20,11 @@ def get_data(filelist, single_cell, fileout, shownames, showtemp, cellspace1, ce
 	print_row = 0 
 	print_col = 0
 
+	discharge_cur = 1 - abs(float(discharge_cur_raw))
+
 	# Testing one or two cells?
 	if single_cell:
+		# v_target = [4.1, 4.0, 3.9, 3.8, 3.7, 3.6, 3.5, 3.4, 3.2, 3.1, 3.0, 2.9, 2.8, 2.7, 2.6, 2.5, 0]
 		v_target = [4.1, 4.0, 3.9, 3.8, 3.7, 0]
 		CUTOFF = 2.5
 	else:
@@ -68,7 +69,7 @@ def get_data(filelist, single_cell, fileout, shownames, showtemp, cellspace1, ce
 				break
 
 			# Look at current, every falling edge, record position, check values
-			if last_cell.value == 0 and cur_cell.value < DISCHARGE_CUR + 1:
+			if last_cell.value == 0 and cur_cell.value < discharge_cur:
 				last_jump = cur_jump
 				cur_jump = i
 				if new_dataset == True:
@@ -99,7 +100,7 @@ def get_data(filelist, single_cell, fileout, shownames, showtemp, cellspace1, ce
 
 			# Check for new tests
 			if (data_in.cell_value(rowx = i, colx = VOL_COL) < CUTOFF and data_in.cell_value(rowx = i, colx = CAP_MAH_COL) != 0 
-			and data_in.cell_value(rowx = i, colx = CUR_COL) <= DISCHARGE_CUR + 1):
+			and data_in.cell_value(rowx = i, colx = CUR_COL) <= discharge_cur):
 				# Magic number 29 fits the layout currently being used to display data
 				print_col = capacity_out_col
 

@@ -50,7 +50,8 @@ class MyFrame(Frame):
         self.l6.grid(row = 6, column = 3, sticky = E)
         self.l7 = Label(self, text = "", width = 20)
         self.l7.grid(row = 7, column = 2, sticky = W)
-
+        self.l8 = Label(self, text = "Discharge Current", width = 25)
+        self.l8.grid(row = 7, column = 1, sticky = E)
 
         # Radio buttons, select cell number
         self.v1 = IntVar()
@@ -98,6 +99,11 @@ class MyFrame(Frame):
         self.e3.grid(row = 6, column = 3, sticky = W)
         self.e3.delete(0, END)
         self.e3.insert(0, "7")
+        # Discharge Current
+        self.e4 = Entry(self, width = 5)
+        self.e4.grid(row = 7, column = 1, sticky = W)
+        self.e4.delete(0, END)
+        self.e4.insert(0, "-4")
 
     def calculate(self):
         if self.e1.get() != '':
@@ -112,11 +118,11 @@ class MyFrame(Frame):
             if filelist != []:
                 self.l2.config(text="Processing...", fg = "black")
                 self.update_idletasks()
-                try:
-                    batt_data_parse8.get_data(filelist, self.v1.get(), fileout, self.v2.get(), self.v3.get(), int(self.e2.get()), int(self.e3.get()) )
-                    self.l2.config(text="Finished!", fg = "black")
-                except:
-                    self.l2.config(text="ERROR: Could not print to file", fg = "red")
+                # try:
+                batt_data_parse8.get_data(filelist, self.v1.get(), fileout, self.v2.get(), self.v3.get(), int(self.e2.get()), int(self.e3.get()), self.e4.get())
+                self.l2.config(text="Finished!", fg = "black")
+                # except:
+                #     self.l2.config(text="ERROR: Could not print to file", fg = "red")
 
             else:
                 self.l2.config(text="ERROR: No files selected", fg = "red")
